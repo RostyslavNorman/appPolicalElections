@@ -2,6 +2,7 @@ package datastructures;
 
 /**
  * Implementation of linked list
+ * Updated with methods needed for HashTable integration
  */
 public class CustomLinkedList<T> {
 
@@ -12,9 +13,22 @@ public class CustomLinkedList<T> {
         head = null;
         size = 0;
     }
+
     public int size() {
         return size;
     }
+
+    public Node<T> getHead() {
+        return head;
+    }
+
+    public void addFirst(T data) {
+        Node<T> newNode = new Node<>(data);
+        newNode.setNext(head);
+        head = newNode;
+        size++;
+    }
+
     // adds an element to the end of the list
     public void add(T data) {
         Node<T> newNode = new Node<>(data);
@@ -32,6 +46,7 @@ public class CustomLinkedList<T> {
         }
         size++; // increment size
     }
+
     //add an element at a specific index in the list
     public void add(int index, T data) {
         // Validation: index must be 0 to size (inclusive)
@@ -60,9 +75,10 @@ public class CustomLinkedList<T> {
 
         size++;
     }
+
     // get an element at a specific index
     public T get(int index) {
-        if (index < 0 || index > size) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
 
@@ -74,7 +90,7 @@ public class CustomLinkedList<T> {
     }
 
     public T remove(int index) {
-        if (index < 0 || index > size) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
         T removedData;
@@ -96,6 +112,7 @@ public class CustomLinkedList<T> {
         size--;
         return removedData;
     }
+
     //removes the first occurrence of the specific elements
     //return true if element was found and removed, false otherwise
     public boolean remove(T data) {
@@ -120,6 +137,7 @@ public class CustomLinkedList<T> {
         }
         return false;
     }
+
     //============SEARCH METHODS================
 
     //checks if the list contains the specific element
@@ -141,11 +159,13 @@ public class CustomLinkedList<T> {
     public boolean isEmpty() {
         return size == 0;
     }
+
     //removes all elements from the list
     public void clear() {
         head = null;
         size = 0;
     }
+
     //toString
     @Override
     public String toString() {
@@ -164,6 +184,7 @@ public class CustomLinkedList<T> {
         output += "]";
         return output;
     }
+
     //additional methods
     //returns first element of the list
     public T getFirst() {
@@ -172,6 +193,7 @@ public class CustomLinkedList<T> {
         }
         return head.getData();
     }
+
     //returns last element
     public T getLast() {
         if (isEmpty()) {
