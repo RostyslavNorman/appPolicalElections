@@ -1,7 +1,8 @@
 import algorithms.QuickSort;
 import datastructures.DynamicArray;
 import models.*;
-//import utils.Comparators;
+import java.util.Comparator;
+import java.util.Comparator.*;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,7 +22,7 @@ public class QuickSortTest {
         array.add(9);
         array.add(3);
 
-        QuickSort.sort(array, (a, b) -> a - b);  // Ascending //Ascending
+        QuickSort.sort(array, (a, b) -> a - b);  // Ascending
 
         assertEquals(1, array.get(0));
         assertEquals(2, array.get(1));
@@ -29,6 +30,56 @@ public class QuickSortTest {
         assertEquals(5, array.get(3));
         assertEquals(8, array.get(4));
         assertEquals(9, array.get(5));
+
+        QuickSort.sort(array, Comparator.reverseOrder()); //Descending
+
+        assertEquals(9, array.get(0));
+        assertEquals(8, array.get(1));
+        assertEquals(5, array.get(2));
+        assertEquals(3, array.get(3));
+        assertEquals(2, array.get(4));
+        assertEquals(1, array.get(5));
+
+    }
+
+    @Test
+    public void testQuickSortStrings(){
+        DynamicArray<String> array = new DynamicArray<>();
+        array.add("Charlie");
+        array.add("Alice");
+        array.add("Bob");
+        array.add("David");
+
+        QuickSort.sort(array, (a, b) -> a.compareToIgnoreCase(b));
+        assertEquals("Alice", array.get(0));
+        assertEquals("Bob", array.get(1));
+        assertEquals("Charlie", array.get(2));
+        assertEquals("David", array.get(3));
+    }
+
+
+
+    // helper methods
+    private DynamicArray<Politician> createSamplePoliticians(){
+        DynamicArray<Politician> politicians = new DynamicArray<>();
+
+        politicians.add(new Politician("Charlie Brown", "01/01/1970", "Sinn Fien", "Cork", ""));
+        politicians.add(new Politician("Alice Johnson", "01/01/1975", "Fianna Fail", "Dublin", ""));
+        politicians.add(new Politician("Bob Smith", "01/01/1980", "Fine Gael", "Galway", ""));
+        politicians.add(new Politician("David Murphy", "01/01/1985", "Independent", "Kerry", ""));
+
+        return politicians;
+    }
+
+    private DynamicArray<Election> createSampleElections() {
+        DynamicArray<Election> elections = new DynamicArray<>();
+
+        elections.add(new Election(ElectionType.GENERAL, "Dublin", "01/01/2011", 3));
+        elections.add(new Election(ElectionType.LOCAL, "Cork", "01/01/2024", 5));
+        elections.add(new Election(ElectionType.EUROPEAN, "Ireland South", "01/01/2016", 4));
+        elections.add(new Election(ElectionType.PRESIDENTIAL, "Ireland", "01/01/2020", 1));
+
+        return elections;
     }
 
 }

@@ -1,4 +1,5 @@
 package models;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Politician {
@@ -73,5 +74,20 @@ public class Politician {
         return "Independent".equalsIgnoreCase(politicalParty);
     }
 
+// ========== EQUALS & HASHCODE ==========
+    // Needed for hash table and comparisons
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Politician other = (Politician) obj;
+        return name.equals(other.name) && dateOfBirth.equals(other.dateOfBirth);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode() + dateOfBirth.hashCode();
+    }
 }
