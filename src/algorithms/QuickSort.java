@@ -57,7 +57,7 @@ public class QuickSort {
             quickSort(array, lowerIndex, rightIndex, comparator);
         }
         if (leftIndex < higherIndex) {
-            quickSort(array, lowerIndex, leftIndex, comparator);
+            quickSort(array, leftIndex, higherIndex, comparator);
         }
 
     }

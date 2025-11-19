@@ -126,9 +126,9 @@ public class DynamicArray<E> {
 
     //crates array from sorted array
     public void fromArray(E[] sortedArray) {
-        clear();
-        for (E element : sortedArray) {
-            add(element);
+        // Simply copy sorted elements back
+        for (int i = 0; i < sortedArray.length && i < size; i++) {
+            data[i] = sortedArray[i];
         }
     }
 
