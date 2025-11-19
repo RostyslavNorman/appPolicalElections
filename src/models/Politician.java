@@ -74,7 +74,20 @@ public class Politician {
         return "Independent".equalsIgnoreCase(politicalParty);
     }
 
-// ========== EQUALS & HASHCODE ==========
+    /**
+     * Calculate age from date of birth
+     */
+    public int getAge() {
+        if (dateOfBirth == null || dateOfBirth.isEmpty()) {
+            return 0;
+        }
+        // Extract year from YYYY-MM-DD
+        int birthYear = Integer.parseInt(dateOfBirth.substring(0, 4));
+        int currentYear = java.time.LocalDate.now().getYear();
+        return currentYear - birthYear;
+    }
+
+    // ========== EQUALS & HASHCODE ==========
     // Needed for hash table and comparisons
 
     @Override

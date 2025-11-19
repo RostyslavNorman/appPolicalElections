@@ -13,6 +13,11 @@ public class Candidate {
         setElection(election);
         setPartyAtTime(partyAtTime);
     }
+
+    public String getPoliticianName(){
+        return politician.getName();
+    }
+
     public Politician getPolitician() {
         return politician;
     }

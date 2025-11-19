@@ -4,6 +4,8 @@ import models.*;
 import java.util.Comparator;
 import java.util.Comparator.*;
 import org.junit.jupiter.api.Test;
+import utils.Comparators;
+
 import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -56,6 +58,19 @@ public class QuickSortTest {
         assertEquals("Charlie", array.get(2));
         assertEquals("David", array.get(3));
     }
+    @Test
+    public void testSortPoliticiansByName(){
+        DynamicArray<Politician> array = createSamplePoliticians();
+
+        QuickSort.sort(array, Comparators.BY_NAME);
+
+        // Fianna Fail, Fine Gael, Sinn Fein, then Independent (alphabetical, Ind last)
+        assertEquals("Fianna Fail", array.get(0).getPoliticalParty());
+        assertEquals("Fine Gael", array.get(1).getPoliticalParty());
+        assertEquals("Sinn Fein", array.get(2).getPoliticalParty());
+        assertEquals("Independent", array.get(3).getPoliticalParty());
+    }
+
 
 
 
@@ -63,10 +78,10 @@ public class QuickSortTest {
     private DynamicArray<Politician> createSamplePoliticians(){
         DynamicArray<Politician> politicians = new DynamicArray<>();
 
-        politicians.add(new Politician("Charlie Brown", "01/01/1970", "Sinn Fien", "Cork", ""));
-        politicians.add(new Politician("Alice Johnson", "01/01/1975", "Fianna Fail", "Dublin", ""));
-        politicians.add(new Politician("Bob Smith", "01/01/1980", "Fine Gael", "Galway", ""));
-        politicians.add(new Politician("David Murphy", "01/01/1985", "Independent", "Kerry", ""));
+        politicians.add(new Politician("Charlie Brown", "1970-01-01", "Sinn Fein", "Cork", ""));
+        politicians.add(new Politician("Alice Johnson", "1975-01-01", "Fianna Fail", "Dublin", ""));
+        politicians.add(new Politician("Bob Smith", "1980-01-01", "Fine Gael", "Galway", ""));
+        politicians.add(new Politician("David Murphy", "1985-01-01", "Independent", "Kerry", ""));
 
         return politicians;
     }
