@@ -27,9 +27,6 @@ public class ElectionSystemController {
     private DynamicArray<Politician> allPoliticians;
     private DynamicArray<Election> allElections;
 
-    // File path for persistence
-    private static final String DATA_FILE = "election_data.dat";
-
     /**
      * Constructor - initializes data structures
      */
