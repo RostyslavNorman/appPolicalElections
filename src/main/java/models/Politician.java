@@ -1,5 +1,5 @@
 package models;
-import java.util.Objects;
+
 import java.util.regex.Pattern;
 
 public class Politician {
@@ -34,9 +34,9 @@ public class Politician {
     }
 
     public void setDateOfBirth(String dateOfBirth) {
-        if (Pattern.matches(DATE_PATTERN, dateOfBirth)){
-            this.dateOfBirth = dateOfBirth;}
-        else {
+        if (Pattern.matches(DATE_PATTERN, dateOfBirth)) {
+            this.dateOfBirth = dateOfBirth;
+        } else {
             throw new IllegalArgumentException("Invalid date format (YYYY-MM-DD)");
         }
 
@@ -47,9 +47,9 @@ public class Politician {
     }
 
     public void setPoliticalParty(String politicalParty) {
-        if (politicalParty == null || politicalParty.isEmpty()){
+        if (politicalParty == null || politicalParty.isEmpty()) {
             this.politicalParty = "Independent";
-        }else {
+        } else {
             this.politicalParty = politicalParty;
         }
     }
@@ -103,4 +103,10 @@ public class Politician {
     public int hashCode() {
         return name.hashCode() + dateOfBirth.hashCode();
     }
+
+    @Override
+    public String toString() {
+        return name + " — " + homeCounty + " — " + dateOfBirth;
+    }
+
 }

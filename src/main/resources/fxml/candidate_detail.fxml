@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ui.CandidateDetailController"
+      spacing="15"
+      styleClass="detail-container">
+
+    <padding>
+        <Insets top="25" right="25" bottom="25" left="25"/>
+    </padding>
+
+    <Label fx:id="lblHeader" styleClass="detail-header"/>
+
+    <HBox spacing="10" styleClass="detail-row">
+        <Label text="Politician:" prefWidth="120" styleClass="detail-label"/>
+        <Label fx:id="lblName" styleClass="detail-value"/>
+    </HBox>
+
+    <HBox spacing="10" styleClass="detail-row">
+        <Label text="Party:" prefWidth="120" styleClass="detail-label"/>
+        <Label fx:id="lblParty" styleClass="detail-value"/>
+    </HBox>
+
+    <HBox spacing="10" styleClass="detail-row">
+        <Label text="Votes:" prefWidth="120" styleClass="detail-label"/>
+        <Label fx:id="lblVotes" styleClass="detail-value"/>
+    </HBox>
+
+    <HBox spacing="10" styleClass="detail-row">
+        <Label text="Winner:" prefWidth="120" styleClass="detail-label"/>
+        <Label fx:id="lblWinner" styleClass="detail-value"/>
+    </HBox>
+
+    <HBox spacing="15" styleClass="button-row">
+        <Button text="Edit" onAction="#editCandidate" prefWidth="100" styleClass="primary-button"/>
+        <Button text="Delete" onAction="#deleteCandidate" prefWidth="100" styleClass="danger-button"/>
+        <Button text="Back" onAction="#goBack" prefWidth="100" styleClass="secondary-button"/>
+    </HBox>
+
+    <Label fx:id="lblStatus" textFill="red" styleClass="status-label"/>
+
+</VBox>

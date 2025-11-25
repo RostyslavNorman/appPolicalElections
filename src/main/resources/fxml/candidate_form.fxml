@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ui.CandidateFormController"
+      spacing="15"
+      styleClass="form-container">
+
+    <padding>
+        <Insets top="25" right="25" bottom="25" left="25"/>
+    </padding>
+
+    <Label fx:id="lblHeader" text="Candidate Form" styleClass="form-header"/>
+
+    <HBox spacing="10" styleClass="form-row">
+        <Label text="Politician:" prefWidth="120" styleClass="form-label"/>
+        <ComboBox fx:id="cmbPolitician" prefWidth="250" styleClass="combo-box"/>
+    </HBox>
+
+    <HBox spacing="10" styleClass="form-row">
+        <Label text="Party at time:" prefWidth="120" styleClass="form-label"/>
+        <TextField fx:id="txtParty" styleClass="text-input"/>
+    </HBox>
+
+    <HBox spacing="10" styleClass="form-row">
+        <Label text="Votes:" prefWidth="120" styleClass="form-label"/>
+        <TextField fx:id="txtVotes" styleClass="text-input"/>
+    </HBox>
+
+    <HBox spacing="15" styleClass="button-row">
+        <Button text="Save" onAction="#saveCandidate" prefWidth="100" styleClass="primary-button"/>
+        <Button text="Cancel" onAction="#cancel" prefWidth="100" styleClass="secondary-button"/>
+    </HBox>
+
+    <Label fx:id="lblStatus" textFill="red" styleClass="status-label"/>
+
+</VBox>

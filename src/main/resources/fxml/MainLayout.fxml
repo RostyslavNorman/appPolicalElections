@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ui.MainLayoutController"
+            stylesheets="@../styles/app.css"
+            styleClass="main-layout">
+
+    <!-- TOP -->
+    <top>
+        <ToolBar fx:id="topBar" styleClass="top-toolbar">
+            <Label fx:id="titleLabel" text="Elections Information System" styleClass="title-label"/>
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <Button fx:id="saveButton" text="Save" onAction="#saveData" styleClass="btn-primary"/>
+            <Button fx:id="loadButton" text="Load" onAction="#loadData" styleClass="btn-secondary"/>
+        </ToolBar>
+    </top>
+
+    <!-- LEFT -->
+    <left>
+        <VBox fx:id="sidebar" spacing="15" styleClass="sidebar">
+
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <Label fx:id="navTitle" text="Navigation" styleClass="section-title"/>
+
+            <Button fx:id="btnPoliticians" text="Politicians" prefWidth="150" onAction="#openPoliticians" styleClass="nav-button"/>
+            <Button fx:id="btnElections"   text="Elections"   prefWidth="150" onAction="#openElections"   styleClass="nav-button"/>
+
+        </VBox>
+    </left>
+
+    <!-- MAIN CONTENT -->
+    <center>
+        <StackPane fx:id="contentPane" styleClass="content-pane"/>
+    </center>
+
+</BorderPane>

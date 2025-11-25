@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ui.CandidateListController"
+      spacing="12"
+      styleClass="root-container">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label fx:id="lblHeader" text="Candidates" styleClass="header-label"/>
+
+    <HBox spacing="10" styleClass="toolbar">
+        <TextField fx:id="txtSearch" promptText="Search politician..." styleClass="search-field"/>
+        <ComboBox fx:id="sortBox" prefWidth="160" styleClass="combo-box"/>
+        <Button text="Add Candidate" onAction="#addCandidate" styleClass="primary-button"/>
+    </HBox>
+
+    <ListView fx:id="listView" prefHeight="600" styleClass="list-view"/>
+
+    <Button text="Back" onAction="#goBack" prefWidth="100" styleClass="secondary-button"/>
+
+</VBox>

@@ -203,6 +203,20 @@ public class ElectionSystemController {
     }
 
     /**
+     * Delete an election using an Election object (overloaded method).
+     */
+    public boolean deleteElection(Election election) {
+        if (election == null) return false;
+
+        // Remove from hash table
+        electionsByID.remove(election.getElectionId());
+
+        // Remove from array
+        return allElections.remove(election);
+    }
+
+
+    /**
      * Get all elections
      */
     public DynamicArray<Election> getAllElections() {
