@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ui.PoliticianListController"
+      spacing="12"
+      styleClass="screen-root">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Main Controls -->
+    <HBox spacing="10" styleClass="toolbar">
+        <TextField fx:id="txtSearch" promptText="Search by name..." styleClass="search-field"/>
+        <ComboBox fx:id="sortBox" prefWidth="150" styleClass="sort-combo"/>
+        <Button text="Advanced Search" onAction="#toggleAdvancedSearch" styleClass="btn-secondary"/>
+        <Button fx:id="btnAdd" text="Add Politician" onAction="#addPolitician" styleClass="btn-primary"/>
+    </HBox>
+
+    <!-- Advanced Search Panel -->
+    <VBox fx:id="advancedBox"
+          spacing="10"
+          visible="false"
+          managed="false"
+          styleClass="advanced-panel">
+
+        <Label text="Advanced Filters" styleClass="section-title"/>
+
+        <HBox spacing="10">
+            <Label text="Party:" prefWidth="100" styleClass="form-label"/>
+            <ComboBox fx:id="cmbParty" styleClass="form-field"/>
+        </HBox>
+
+        <HBox spacing="10">
+            <Label text="County:" prefWidth="100" styleClass="form-label"/>
+            <ComboBox fx:id="cmbCounty" styleClass="form-field"/>
+        </HBox>
+
+        <HBox spacing="10">
+            <Label text="Year of Birth:" prefWidth="120" styleClass="form-label"/>
+            <TextField fx:id="txtYear" promptText="e.g. 1990" styleClass="form-field"/>
+        </HBox>
+
+        <HBox spacing="10">
+            <Button text="Apply Filters" onAction="#applyAdvancedSearch" styleClass="btn-primary"/>
+            <Button text="Clear Filters" onAction="#clearAdvancedSearch" styleClass="btn-secondary"/>
+        </HBox>
+    </VBox>
+
+    <!-- List -->
+    <ListView fx:id="listView" prefHeight="600" styleClass="list-view"/>
+
+</VBox>

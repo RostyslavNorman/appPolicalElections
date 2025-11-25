@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ui.ElectionListController"
+      spacing="12"
+      styleClass="root-pane">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <HBox spacing="10" styleClass="search-bar">
+        <TextField fx:id="txtSearch"
+                   promptText="Search by location or year..."
+                   styleClass="input-field"/>
+
+        <ComboBox fx:id="sortBox"
+                  prefWidth="150"
+                  styleClass="input-combo"/>
+
+        <Button text="Advanced Search"
+                onAction="#toggleAdvancedSearch"
+                styleClass="btn"/>
+
+        <Button fx:id="btnAdd"
+                text="Add Election"
+                onAction="#addElection"
+                styleClass="btn btn-primary"/>
+    </HBox>
+
+    <!-- Advanced Search Panel -->
+    <VBox fx:id="advancedBox"
+          spacing="10"
+          visible="false"
+          managed="false"
+          styleClass="advanced-panel">
+
+        <Label text="Advanced Filters" styleClass="header-title"/>
+
+        <HBox spacing="10">
+            <Label text="Type:" prefWidth="100" styleClass="form-label"/>
+            <ComboBox fx:id="cmbType" styleClass="input-combo"/>
+        </HBox>
+
+        <HBox spacing="10">
+            <Label text="Year:" prefWidth="100" styleClass="form-label"/>
+            <ComboBox fx:id="cmbYear" styleClass="input-combo"/>
+        </HBox>
+
+        <HBox spacing="10">
+            <Label text="Location:" prefWidth="100" styleClass="form-label"/>
+            <TextField fx:id="txtLocationFilter" styleClass="input-field"/>
+        </HBox>
+
+        <HBox spacing="10">
+            <Button text="Apply Filters"
+                    onAction="#applyAdvancedSearch"
+                    styleClass="btn btn-primary"/>
+
+            <Button text="Clear Filters"
+                    onAction="#clearAdvancedSearch"
+                    styleClass="btn"/>
+        </HBox>
+
+    </VBox>
+
+    <ListView fx:id="listView"
+              prefHeight="600"
+              styleClass="list-view"/>
+
+</VBox>

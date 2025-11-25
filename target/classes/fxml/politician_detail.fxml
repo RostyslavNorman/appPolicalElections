@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ui.PoliticianDetailController"
+      spacing="15"
+      styleClass="screen-root">
+
+    <padding>
+        <Insets top="25" right="25" bottom="25" left="25"/>
+    </padding>
+
+    <Label fx:id="headerLabel" text="Politician Details" styleClass="screen-title"/>
+
+    <HBox spacing="10">
+        <Label text="Name:" prefWidth="120" styleClass="form-label"/>
+        <Label fx:id="lblName" styleClass="detail-value"/>
+    </HBox>
+
+    <HBox spacing="10">
+        <Label text="Date of Birth:" prefWidth="120" styleClass="form-label"/>
+        <Label fx:id="lblDOB" styleClass="detail-value"/>
+    </HBox>
+
+    <HBox spacing="10">
+        <Label text="Age:" prefWidth="120" styleClass="form-label"/>
+        <Label fx:id="lblAge" styleClass="detail-value"/>
+    </HBox>
+
+    <HBox spacing="10">
+        <Label text="Party:" prefWidth="120" styleClass="form-label"/>
+        <Label fx:id="lblParty" styleClass="detail-value"/>
+    </HBox>
+
+    <HBox spacing="10">
+        <Label text="Home County:" prefWidth="120" styleClass="form-label"/>
+        <Label fx:id="lblCounty" styleClass="detail-value"/>
+    </HBox>
+
+    <HBox spacing="10">
+        <Label text="Image URL:" prefWidth="120" styleClass="form-label"/>
+        <Label fx:id="lblImage" styleClass="detail-value"/>
+    </HBox>
+
+    <Button fx:id="btnViewElections"
+            text="View Elections Participated"
+            onAction="#viewElections"
+            prefWidth="240"
+            styleClass="btn-primary"/>
+
+    <HBox spacing="10">
+        <Button fx:id="btnEdit" text="Edit" onAction="#editPolitician" prefWidth="100" styleClass="btn-secondary"/>
+        <Button fx:id="btnDelete" text="Delete" onAction="#deletePolitician" prefWidth="100" styleClass="btn-danger"/>
+        <Button fx:id="btnBack" text="Back" onAction="#back" prefWidth="100" styleClass="btn-secondary"/>
+    </HBox>
+
+    <Label fx:id="lblStatus" styleClass="status-label"/>
+
+</VBox>
