@@ -96,13 +96,6 @@ public class PoliticianDetailController implements UsesElectionController {
     // View Elections Participated button
     // (We will implement this screen later)
     // ==========================================================
-    @FXML
-    private void viewElections() {
-        Navigation.goTo("politician_elections.fxml", systemController, controller -> {
-            ((PoliticianElectionsController) controller)
-                    .setPoliticianName(selectedPolitician.getName());
-        });
-    }
 
 
 
