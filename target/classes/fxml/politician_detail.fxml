@@ -45,12 +45,6 @@
         <Label fx:id="lblImage" styleClass="detail-value"/>
     </HBox>
 
-    <Button fx:id="btnViewElections"
-            text="View Elections Participated"
-            onAction="#viewElections"
-            prefWidth="240"
-            styleClass="btn-primary"/>
-
     <HBox spacing="10">
         <Button fx:id="btnEdit" text="Edit" onAction="#editPolitician" prefWidth="100" styleClass="btn-secondary"/>
         <Button fx:id="btnDelete" text="Delete" onAction="#deletePolitician" prefWidth="100" styleClass="btn-danger"/>
