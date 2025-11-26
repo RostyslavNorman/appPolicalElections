@@ -9,9 +9,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import models.Candidate;
 import models.Election;
 import models.ElectionType;
-
+import models.Politician;
 
 public class ElectionListController implements UsesElectionController {
 
@@ -22,7 +23,7 @@ public class ElectionListController implements UsesElectionController {
     private ComboBox<String> sortBox;
 
     @FXML
-    private ListView<Election> listView;
+    private TreeView<Object> treeView; // replaces ListView<Election>
 
     @FXML
     private VBox advancedBox;
@@ -33,15 +34,15 @@ public class ElectionListController implements UsesElectionController {
     @FXML
     private TextField txtLocationFilter;
 
-
     private ElectionSystemController systemController;
+    private DynamicArray<Election> currentList = new DynamicArray<>();
 
     @Override
     public void setSystemController(ElectionSystemController controller) {
         this.systemController = controller;
         loadElections();
         setupSortOptions();
-        setupClickHandler();
+        setupCellFactory();
 
         // populate types
         for (ElectionType t : ElectionType.values()) {
@@ -53,64 +54,133 @@ public class ElectionListController implements UsesElectionController {
         for (int i = 0; i < years.size(); i++) {
             cmbYear.getItems().add(years.get(i));
         }
-
     }
 
-    private void setupClickHandler() {
-        listView.setOnMouseClicked(event -> {
-            Election selected = listView.getSelectionModel().getSelectedItem();
+    // ==========================================================
+    // TREE CELL FACTORY (custom behavior)
+    // ==========================================================
 
-            if (selected != null) {
-                openElectionDetail(selected);
-            }
+    private void setupCellFactory() {
+        treeView.setCellFactory(tv -> {
+            TreeCell<Object> cell = new TreeCell<>() {
+                @Override
+                protected void updateItem(Object item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                        return;
+                    }
+
+                    if (item instanceof Election e) {
+                        setText(e.toString());
+                    } else if (item instanceof Candidate c) {
+                        setText("Candidate: "
+                                + c.getPolitician().getName()
+                                + " — Votes: " + c.getVotes());
+                    } else if (item instanceof Politician p) {
+                        setText("Politician: " + p.getName());
+                    }
+                }
+            };
+
+            cell.setOnMouseClicked(e -> {
+                if (e.getClickCount() == 2 && !cell.isEmpty()) {
+                    Object item = cell.getItem();
+
+                    if (item instanceof Election election) {
+                        openElectionDetail(election);
+                    } else if (item instanceof Candidate candidate) {
+                        openPoliticianDetail(candidate.getPolitician());
+                    }
+                }
+            });
+
+            return cell;
+        });
+    }
+
+    private void openPoliticianDetail(Politician p) {
+        Navigation.goTo("politician_detail.fxml", systemController, controller -> {
+            ((PoliticianDetailController) controller).setPolitician(p);
         });
     }
 
     private void openElectionDetail(Election election) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/election_detail.fxml"));
-        try {
-            Node view = loader.load();
-
-            ElectionDetailController controller = loader.getController();
-            controller.setSystemController(systemController);
-            controller.loadElection(election);
-
-            UIContext.getMainLayoutController().setContent(view);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    // ==========================================================
-    // LOAD / REFRESH LIST
-    // ==========================================================
-
-    private void loadElections() {
-        if (systemController == null) return;
-
-        DynamicArray<Election> data = systemController.getAllElections();
-        listView.setItems(utils.JFXUtils.toObservableList(data));
-
-        listView.setCellFactory(param -> new ListCell<>() {
-            @Override
-            protected void updateItem(Election election, boolean empty) {
-                super.updateItem(election, empty);
-                if (empty || election == null) {
-                    setText(null);
-                } else {
-                    setText(election.toString());
-                }
-            }
+        Navigation.goTo("election_detail.fxml", systemController, controller -> {
+            ((ElectionDetailController) controller).loadElection(election);
         });
-
     }
 
     // ==========================================================
-    // SORT SETUP
+    // BUILD TREE
     // ==========================================================
+    private void buildTree(DynamicArray<Election> elections) {
+        TreeItem<Object> root = new TreeItem<>();
 
+        for (int i = 0; i < elections.size(); i++) {
+            Election e = elections.get(i);
+
+            TreeItem<Object> electionItem = new TreeItem<>(e);
+
+            // Add candidates as children
+            DynamicArray<Candidate> cList = e.getCandidates();
+            for (int j = 0; j < cList.size(); j++) {
+                electionItem.getChildren().add(new TreeItem<>(cList.get(j)));
+            }
+
+            root.getChildren().add(electionItem);
+        }
+
+        treeView.setRoot(root);
+        treeView.setShowRoot(false);
+    }
+
+    // ==========================================================
+    // LOAD & SEARCH & FILTER
+    // ==========================================================
+    private void loadElections() {
+        currentList = systemController.getAllElections();
+        buildTree(currentList);
+    }
+
+    @FXML
+    private void initialize() {
+        txtSearch.textProperty().addListener((obs, oldV, newV) -> applySearch(newV));
+    }
+
+    private void applySearch(String term) {
+        currentList = systemController.searchElectionsSimple(term);
+        buildTree(currentList);
+    }
+
+    @FXML
+    private void applyAdvancedSearch() {
+        ElectionType type = cmbType.getValue();
+        String year = cmbYear.getValue();
+        String location = txtLocationFilter.getText().trim();
+
+        currentList = systemController.searchElections(type, year, location);
+        buildTree(currentList);
+    }
+
+    @FXML
+    private void clearAdvancedSearch() {
+        cmbType.setValue(null);
+        cmbYear.setValue(null);
+        txtLocationFilter.setText("");
+        loadElections();
+    }
+
+    @FXML
+    private void toggleAdvancedSearch() {
+        boolean show = !advancedBox.isVisible();
+        advancedBox.setVisible(show);
+        advancedBox.setManaged(show);
+    }
+
+    // ==========================================================
+    // SORTING
+    // ==========================================================
     private void setupSortOptions() {
         sortBox.getItems().addAll(
                 "Year (Ascending)",
@@ -127,114 +197,30 @@ public class ElectionListController implements UsesElectionController {
     }
 
     private void applySorting() {
-        if (systemController == null) return;
-
-        DynamicArray<Election> elections = systemController.getAllElections();
+        if (currentList == null) return;
 
         String selected = sortBox.getValue();
         if (selected == null) return;
 
         switch (selected) {
-            case "Year (Ascending)" -> systemController.sortElections(elections, "year", true);
-            case "Year (Descending)" -> systemController.sortElections(elections, "year", false);
-            case "Date (Ascending)" -> systemController.sortElections(elections, "date", true);
-            case "Date (Descending)" -> systemController.sortElections(elections, "date", false);
-            case "Location (A→Z)" -> systemController.sortElections(elections, "location", true);
-            case "Location (Z→A)" -> systemController.sortElections(elections, "location", false);
-            case "Seats (Ascending)" -> systemController.sortElections(elections, "seats", true);
-            case "Seats (Descending)" -> systemController.sortElections(elections, "seats", false);
+            case "Year (Ascending)" -> systemController.sortElections(currentList, "year", true);
+            case "Year (Descending)" -> systemController.sortElections(currentList, "year", false);
+            case "Date (Ascending)" -> systemController.sortElections(currentList, "date", true);
+            case "Date (Descending)" -> systemController.sortElections(currentList, "date", false);
+            case "Location (A→Z)" -> systemController.sortElections(currentList, "location", true);
+            case "Location (Z→A)" -> systemController.sortElections(currentList, "location", false);
+            case "Seats (Ascending)" -> systemController.sortElections(currentList, "seats", true);
+            case "Seats (Descending)" -> systemController.sortElections(currentList, "seats", false);
         }
 
-        loadElections();
+        buildTree(currentList);
     }
 
     // ==========================================================
-    // ADD NEW ELECTION
+    // ADD NEW
     // ==========================================================
-
     @FXML
     private void addElection() {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/fxml/election_form.fxml")
-            );
-
-            Node form = loader.load();
-
-            Object controller = loader.getController();
-            if (controller instanceof UsesElectionController) {
-                ((UsesElectionController) controller).setSystemController(systemController);
-            }
-
-            UIContext.getMainLayoutController().setContent(form);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("ERROR: Could not load election_form.fxml");
-        }
+        Navigation.goTo("election_form.fxml", systemController, null);
     }
-
-
-    // ==========================================================
-    // SEARCH (simple: location or year)
-    // ==========================================================
-
-    @FXML
-    private void initialize() {
-        txtSearch.textProperty().addListener((obs, oldV, newV) -> applySearch(newV));
-    }
-
-    private void applySearch(String term) {
-        if (systemController == null) return;
-
-        DynamicArray<Election> filtered =
-                systemController.searchElectionsSimple(term);
-
-        ObservableList<Election> obs = FXCollections.observableArrayList();
-        for (int i = 0; i < filtered.size(); i++) {
-            obs.add(filtered.get(i));
-        }
-
-        listView.setItems(obs);
-    }
-
-    @FXML
-    private void toggleAdvancedSearch() {
-        boolean show = !advancedBox.isVisible();
-        advancedBox.setVisible(show);
-        advancedBox.setManaged(show);
-    }
-
-
-    @FXML
-    private void applyAdvancedSearch() {
-
-        ElectionType type = cmbType.getValue();
-        String year = cmbYear.getValue();
-        String location = txtLocationFilter.getText().trim();
-
-        DynamicArray<Election> results =
-                systemController.searchElections(type, year, location);
-
-        ObservableList<Election> obs = FXCollections.observableArrayList();
-
-        for (int i = 0; i < results.size(); i++) {
-            obs.add(results.get(i));
-        }
-
-        listView.setItems(obs);
-
-
-    }
-
-    @FXML
-    private void clearAdvancedSearch() {
-        cmbType.setValue(null);
-        cmbYear.setValue(null);
-        txtLocationFilter.setText("");
-
-        loadElections();
-    }
-
-
 }

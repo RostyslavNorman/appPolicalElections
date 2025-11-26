@@ -68,8 +68,9 @@
 
     </VBox>
 
-    <ListView fx:id="listView"
+    <TreeView fx:id="treeView"
               prefHeight="600"
-              styleClass="list-view"/>
+              showRoot="false"
+              styleClass="list-view" />
 
 </VBox>

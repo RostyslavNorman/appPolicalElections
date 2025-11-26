@@ -10,6 +10,7 @@ import models.Politician;
 public class PoliticianListController implements UsesElectionController {
 
     private ElectionSystemController systemController;
+    private DynamicArray<Politician> currentList = new DynamicArray<>();
 
     @FXML
     private TextField txtSearch;
@@ -88,13 +89,15 @@ public class PoliticianListController implements UsesElectionController {
         DynamicArray<Politician> results =
                 systemController.searchPoliticiansByName(txtSearch.getText());
 
+        currentList = results;
+
         systemController.sortPoliticians(
-                results,
+                currentList,
                 sortBox.getValue(),
-                true  // ascending
+                true
         );
 
-        refreshList(results);
+        refreshList(currentList);
     }
 
 
@@ -102,11 +105,14 @@ public class PoliticianListController implements UsesElectionController {
     // Refresh ListView content
     // ==========================================================
     private void refreshList(DynamicArray<Politician> array) {
+        currentList = array;
+
         listView.getItems().clear();
         for (int i = 0; i < array.size(); i++) {
             listView.getItems().add(array.get(i));
         }
     }
+
 
 
     // ==========================================================
@@ -132,14 +138,17 @@ public class PoliticianListController implements UsesElectionController {
         DynamicArray<Politician> results =
                 systemController.searchPoliticians(null, party, county);
 
-        refreshList(results);
+        currentList = results;
+        refreshList(currentList);
     }
 
     @FXML
     private void clearAdvancedSearch() {
         cmbParty.setValue(null);
         cmbCounty.setValue(null);
-        refreshList(systemController.getAllPoliticians());
+        DynamicArray<Politician> all = systemController.getAllPoliticians();
+        currentList = all;
+        refreshList(all);
     }
 
 
