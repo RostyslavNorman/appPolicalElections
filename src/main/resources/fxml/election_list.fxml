@@ -13,6 +13,7 @@
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
+    <!-- Search + Sort -->
     <HBox spacing="10" styleClass="search-bar">
         <TextField fx:id="txtSearch"
                    promptText="Search by location or year..."
@@ -26,8 +27,7 @@
                 onAction="#toggleAdvancedSearch"
                 styleClass="btn"/>
 
-        <Button fx:id="btnAdd"
-                text="Add Election"
+        <Button text="Add Election"
                 onAction="#addElection"
                 styleClass="btn btn-primary"/>
     </HBox>
@@ -68,9 +68,10 @@
 
     </VBox>
 
+    <!-- TreeView for expandable elections -->
     <TreeView fx:id="treeView"
               prefHeight="600"
               showRoot="false"
-              styleClass="list-view" />
+              styleClass="list-view"/>
 
 </VBox>
