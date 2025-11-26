@@ -2,11 +2,9 @@ package ui;
 
 import controllers.ElectionSystemController;
 import datastructures.DynamicArray;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
+
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import models.Candidate;
