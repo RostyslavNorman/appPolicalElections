@@ -1,0 +1,110 @@
+/* =========================================
+   GLOBAL COLORS — soft green theme
+   ========================================= */
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-base: #e8f5e9;             /* very gentle green */
+    -fx-background-color: #e8f5e9; /* background */
+}
+
+/* =========================================
+   LABELS
+   ========================================= */
+.label {
+    -fx-text-fill: #2e7d32; /* dark leaf green */
+}
+
+#headerLabel,
+#lblHeader,
+#titleLabel,
+#navTitle {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1b5e20;
+}
+
+/* Red status labels */
+#lblStatus {
+    -fx-text-fill: #d32f2f;
+}
+
+/* =========================================
+   BUTTONS
+   ========================================= */
+.button {
+    -fx-background-color: #a5d6a7;      /* soft green button */
+    -fx-text-fill: #1b5e20;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-padding: 6 15 6 15;
+}
+
+.button:hover {
+    -fx-background-color: #81c784;      /* lightly brighter green */
+}
+
+.button:pressed {
+    -fx-background-color: #66bb6a;
+}
+
+/* Danger buttons (delete, etc.) */
+#btnDelete {
+    -fx-background-color: #ef5350;
+    -fx-text-fill: white;
+}
+#btnDelete:hover {
+    -fx-background-color: #e53935;
+}
+
+/* =========================================
+   TEXTFIELDS & COMBOBOXES
+   ========================================= */
+.text-field, .combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #a5d6a7;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.text-field:focused, .combo-box:focused {
+    -fx-border-color: #66bb6a;
+    -fx-background-color: #ffffff;
+}
+
+/* =========================================
+   LISTVIEW
+   ========================================= */
+.list-view {
+    -fx-background-color: white;
+    -fx-border-color: #a5d6a7;
+}
+
+.list-cell {
+    -fx-padding: 8;
+}
+
+.list-cell:hover {
+    -fx-background-color: #c8e6c9;
+}
+
+.list-cell:selected {
+    -fx-background-color: #a5d6a7;
+    -fx-text-fill: #1b5e20;
+    -fx-font-weight: bold;
+}
+
+/* =========================================
+   SIDEBAR (navigation)
+   ========================================= */
+#sidebar {
+    -fx-background-color: #c8e6c9;
+    -fx-padding: 20;
+}
+
+/* =========================================
+   TOOLBAR
+   ========================================= */
+#topBar {
+    -fx-background-color: #a5d6a7;
+    -fx-padding: 10;
+}

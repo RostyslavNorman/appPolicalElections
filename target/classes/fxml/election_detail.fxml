@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ui.ElectionDetailController"
+      spacing="15"
+      styleClass="root-pane">
+
+    <padding>
+        <Insets top="25" right="25" bottom="25" left="25"/>
+    </padding>
+
+    <!-- Header -->
+    <Label fx:id="lblHeader"
+           text="Election Details"
+           styleClass="header-title"/>
+
+    <!-- Type -->
+    <HBox spacing="10">
+        <Label text="Election Type:" prefWidth="120" styleClass="form-label"/>
+        <Label fx:id="lblType" styleClass="detail-value"/>
+    </HBox>
+
+    <!-- Location -->
+    <HBox spacing="10">
+        <Label text="Location:" prefWidth="120" styleClass="form-label"/>
+        <Label fx:id="lblLocation" styleClass="detail-value"/>
+    </HBox>
+
+    <!-- Date -->
+    <HBox spacing="10">
+        <Label text="Date:" prefWidth="120" styleClass="form-label"/>
+        <Label fx:id="lblDate" styleClass="detail-value"/>
+    </HBox>
+
+    <!-- Seats -->
+    <HBox spacing="10">
+        <Label text="Seats:" prefWidth="120" styleClass="form-label"/>
+        <Label fx:id="lblSeats" styleClass="detail-value"/>
+    </HBox>
+
+    <!-- Candidate Count -->
+    <HBox spacing="10">
+        <Label text="Candidates:" prefWidth="120" styleClass="form-label"/>
+        <Label fx:id="lblCandidates" styleClass="detail-value"/>
+    </HBox>
+
+    <!-- Buttons -->
+    <HBox spacing="12">
+        <Button text="View Candidates"
+                fx:id="btnCandidates"
+                onAction="#openCandidates"
+                prefWidth="150"
+                styleClass="btn btn-primary"/>
+
+        <Button text="Edit"
+                onAction="#editElection"
+                prefWidth="100"
+                styleClass="btn"/>
+
+        <Button text="Delete"
+                onAction="#deleteElection"
+                prefWidth="100"
+                styleClass="btn btn-danger"/>
+
+        <Button text="Back"
+                onAction="#goBack"
+                prefWidth="100"
+                styleClass="btn"/>
+    </HBox>
+
+    <Label fx:id="lblStatus" styleClass="status-label error-text"/>
+
+</VBox>

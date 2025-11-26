@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ui.PoliticianFormController"
+      spacing="15"
+      styleClass="screen-root">
+
+    <padding>
+        <Insets top="25" right="25" bottom="25" left="25"/>
+    </padding>
+
+    <Label fx:id="headerLabel" text="Politician Form" styleClass="screen-title"/>
+
+    <HBox spacing="10">
+        <Label text="Name:" prefWidth="120" styleClass="form-label"/>
+        <TextField fx:id="txtName" promptText="Full name" styleClass="form-field"/>
+    </HBox>
+
+    <HBox spacing="10">
+        <Label text="Date of Birth:" prefWidth="120" styleClass="form-label"/>
+        <TextField fx:id="txtDOB" promptText="YYYY-MM-DD" styleClass="form-field"/>
+    </HBox>
+
+    <HBox spacing="10">
+        <Label text="Party:" prefWidth="120" styleClass="form-label"/>
+        <TextField fx:id="txtParty" promptText="Political Party" styleClass="form-field"/>
+    </HBox>
+
+    <HBox spacing="10">
+        <Label text="Home County:" prefWidth="120" styleClass="form-label"/>
+        <TextField fx:id="txtCounty" promptText="County" styleClass="form-field"/>
+    </HBox>
+
+    <HBox spacing="10">
+        <Label text="Image URL:" prefWidth="120" styleClass="form-label"/>
+        <TextField fx:id="txtImage" promptText="http://example.com/image.jpg" styleClass="form-field"/>
+    </HBox>
+
+    <HBox spacing="15">
+        <Button fx:id="btnSave" text="Save" onAction="#savePolitician" prefWidth="100" styleClass="btn-primary"/>
+        <Button fx:id="btnCancel" text="Cancel" onAction="#cancel" prefWidth="100" styleClass="btn-secondary"/>
+    </HBox>
+
+    <Label fx:id="lblStatus" styleClass="status-label"/>
+
+</VBox>

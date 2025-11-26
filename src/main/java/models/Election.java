@@ -1,6 +1,7 @@
 package models;
 
 import datastructures.DynamicArray;
+
 import java.util.regex.Pattern;
 
 public class Election {
@@ -32,6 +33,7 @@ public class Election {
         this.candidates = new DynamicArray<>();
         this.electionId = generateElectionId();
     }
+
     /**
      * Generate unique election ID
      * Format: TYPE-LOCATION-YEAR
@@ -89,7 +91,7 @@ public class Election {
     public void setDate(String date) {
         if (Pattern.matches(DATE_PATTERN, date)) {
             this.date = date;
-        }else {
+        } else {
             throw new IllegalArgumentException("Invalid date");
         }
         this.electionId = generateElectionId();
@@ -180,6 +182,7 @@ public class Election {
         }
         return false;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -195,5 +198,14 @@ public class Election {
     }
 
 
-
+    @Override
+    public String toString() {
+        return String.format(
+                "%s — %s — %s (%d seats)",
+                electionId,
+                type,
+                location,
+                numberOfSeats
+        );
+    }
 }

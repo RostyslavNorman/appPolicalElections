@@ -2,7 +2,7 @@ import algorithms.QuickSort;
 import datastructures.DynamicArray;
 import models.*;
 import java.util.Comparator;
-import java.util.Comparator.*;
+
 import org.junit.jupiter.api.Test;
 import utils.Comparators;
 import static org.junit.jupiter.api.Assertions.*;
