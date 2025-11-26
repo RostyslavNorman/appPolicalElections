@@ -187,22 +187,10 @@ public class ElectionListController implements UsesElectionController {
     private void applySearch(String term) {
         if (systemController == null) return;
 
-        term = term.toLowerCase().trim();
-        DynamicArray<Election> all = systemController.getAllElections();
-
-        DynamicArray<Election> filtered = new DynamicArray<>();
-
-        for (int i = 0; i < all.size(); i++) {
-            Election e = all.get(i);
-
-            if (e.getLocation().toLowerCase().contains(term) ||
-                    e.getYear().toLowerCase().contains(term)) {
-                filtered.add(e);
-            }
-        }
+        DynamicArray<Election> filtered =
+                systemController.searchElectionsSimple(term);
 
         ObservableList<Election> obs = FXCollections.observableArrayList();
-
         for (int i = 0; i < filtered.size(); i++) {
             obs.add(filtered.get(i));
         }

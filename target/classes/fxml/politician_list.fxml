@@ -41,11 +41,6 @@
         </HBox>
 
         <HBox spacing="10">
-            <Label text="Year of Birth:" prefWidth="120" styleClass="form-label"/>
-            <TextField fx:id="txtYear" promptText="e.g. 1990" styleClass="form-field"/>
-        </HBox>
-
-        <HBox spacing="10">
             <Button text="Apply Filters" onAction="#applyAdvancedSearch" styleClass="btn-primary"/>
             <Button text="Clear Filters" onAction="#clearAdvancedSearch" styleClass="btn-secondary"/>
         </HBox>

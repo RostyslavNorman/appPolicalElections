@@ -41,6 +41,7 @@ public class ElectionSystemController {
 
     /**
      * Add a new politician to the system
+     *
      * @return true if added successfully, false if politician already exists
      */
     public boolean addPolitician(String name, String dateOfBirth, String politicalParty,
@@ -227,10 +228,11 @@ public class ElectionSystemController {
 
     /**
      * Add candidate to an election
+     *
      * @param politicianName Name of existing politician
-     * @param electionId ID of existing election
-     * @param votes Number of votes received
-     * @param partyAtTime Party affiliation at time of election
+     * @param electionId     ID of existing election
+     * @param votes          Number of votes received
+     * @param partyAtTime    Party affiliation at time of election
      */
     public boolean addCandidate(String politicianName, String electionId,
                                 int votes, String partyAtTime) {
@@ -330,17 +332,48 @@ public class ElectionSystemController {
      * Search politicians by partial name (case-insensitive)
      */
     public DynamicArray<Politician> searchPoliticiansByName(String partialName) {
-        DynamicArray<Politician> results = new DynamicArray<>();
-        String searchTerm = partialName.toLowerCase();
+        return politiciansByName.searchByPartialKey(partialName);
+    }
 
-        for (int i = 0; i < allPoliticians.size(); i++) {
-            Politician p = allPoliticians.get(i);
-            if (p.getName().toLowerCase().contains(searchTerm)) {
-                results.add(p);
+    /**
+     * Simple search for elections by free text.
+     * Uses hash table internally.
+     * Matches by:
+     * - electionId (через searchByPartialKey)
+     * - location
+     * - year
+     */
+    public DynamicArray<Election> searchElectionsSimple(String term) {
+        DynamicArray<Election> results = new DynamicArray<>();
+
+        if (term == null || term.trim().isEmpty()) {
+            return electionsByID.values();
+        }
+
+        String search = term.toLowerCase().trim();
+
+        DynamicArray<Election> byId = electionsByID.searchByPartialKey(term);
+        for (int i = 0; i < byId.size(); i++) {
+            results.add(byId.get(i));
+        }
+
+        DynamicArray<Election> all = electionsByID.values();
+        for (int i = 0; i < all.size(); i++) {
+            Election e = all.get(i);
+
+            if (results.contains(e)) {
+                continue;
+            }
+
+            if (e.getLocation().toLowerCase().contains(search) ||
+                    e.getYear().toLowerCase().contains(search)) {
+                results.add(e);
             }
         }
+
         return results;
     }
+
 
     /**
      * Filter politicians by party
@@ -376,8 +409,9 @@ public class ElectionSystemController {
 
     /**
      * Multi-criteria politician search
-     * @param name Partial name (null to ignore)
-     * @param party Party name (null to ignore)
+     *
+     * @param name   Partial name (null to ignore)
+     * @param party  Party name (null to ignore)
      * @param county County name (null to ignore)
      */
     public DynamicArray<Politician> searchPoliticians(String name, String party, String county) {
@@ -447,8 +481,9 @@ public class ElectionSystemController {
 
     /**
      * Multi-criteria election search
-     * @param type Election type (null to ignore)
-     * @param year Year (null to ignore)
+     *
+     * @param type     Election type (null to ignore)
+     * @param year     Year (null to ignore)
      * @param location Location (null to ignore)
      */
     public DynamicArray<Election> searchElections(ElectionType type, String year, String location) {
@@ -488,9 +523,10 @@ public class ElectionSystemController {
 
     /**
      * Sort politicians by specified criteria
+     *
      * @param politicians Array to sort
-     * @param sortBy "name", "party", "county", "age"
-     * @param ascending Sort direction
+     * @param sortBy      "name", "party", "county", "age"
+     * @param ascending   Sort direction
      */
     public void sortPoliticians(DynamicArray<Politician> politicians, String sortBy, boolean ascending) {
         Comparator<Politician> comparator = Comparators.getPoliticianComparator(sortBy, ascending);
@@ -499,8 +535,9 @@ public class ElectionSystemController {
 
     /**
      * Sort elections by specified criteria
+     *
      * @param elections Array to sort
-     * @param sortBy "year", "date", "type", "location", "seats"
+     * @param sortBy    "year", "date", "type", "location", "seats"
      * @param ascending Sort direction
      */
     public void sortElections(DynamicArray<Election> elections, String sortBy, boolean ascending) {

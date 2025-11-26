@@ -347,4 +347,34 @@ public class HashTable<K, V> {
         sb.append("}");
         return sb.toString();
     }
+
+    /**
+     * Returns all values whose keys partially match the given substring.
+     * Case-insensitive.
+     *
+     * @param substring Part of the key to search for
+     * @return DynamicArray of matching values
+     */
+    public DynamicArray<V> searchByPartialKey(String substring) {
+        DynamicArray<V> results = new DynamicArray<>();
+
+        if (substring == null || substring.trim().isEmpty()) {
+            return values(); // return all
+        }
+
+        String lower = substring.toLowerCase();
+
+        // Get all keys from hash table
+        DynamicArray<K> allKeys = keys();
+
+        for (int i = 0; i < allKeys.size(); i++) {
+            K key = allKeys.get(i);
+            if (key != null && key.toString().toLowerCase().contains(lower)) {
+                results.add(get(key));
+            }
+        }
+
+        return results;
+    }
+
 }
