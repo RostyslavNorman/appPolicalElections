@@ -1,0 +1,1 @@
+Group project assignment 2 semester 3. The objective of this CA exercise is to create an application for storing and retrieving information on Irish political elections. The application should include both hashing and sorting functionality, and provide a JavaFX graphical user interface.
